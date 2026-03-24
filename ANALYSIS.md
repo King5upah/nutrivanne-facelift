@@ -4,18 +4,22 @@
 The live website `www.nutrivanne.com.mx` is built using the **Webnode** site builder.
 
 ### Key Issues Identified:
-1.  **Payment Friction:** The site uses **PayPal No-Code Payment (NCP)** links. This causes a full-page redirect to PayPal's external site. On mobile connections, this "hands-off" often feels like the site has "frozen" or is unresponsive, which aligns with the principal complaint.
-2.  **Fragmented Journey:** Supplements are sold via a TikTok Showcase redirect rather than an integrated shop.
-3.  **Performance:** Site builder templates often have heavy "bloat" (unused JS/CSS) which affects mobile performance.
-4.  **UX Clutter:** Intrusive promotional popups and lack of sticky navigation hinder the mobile user experience.
+1.  **Payment Friction (The "Stalling" Problem):** 
+    - **Mechanism:** The current site uses native **PayPal No-Code Payment (NCP)** links. These are external redirects that essentially "hand off" the user to a separate domain.
+    - **Failure Point:** In many mobile browsers (iOS Safari, Chrome for Android), these redirects are flagged as suspicious or interrupted by the browser's "popup/redirect protection" if the transition isn't instantaneous.
+    - **UX Result:** The original tab stays open but becomes unresponsive while the browser waits for the redirect handshake. This creates the "frozen" experience reported by the user.
+    - **The "Singleton" Theory:** While the user suspected an instance crash, the issue is actually **client-side redirect overhead** and **SaaS builder latency**.
+
+2.  **Fragmented Journey:** Supplements and plans are disconnected, requiring multiple redirects (TikTok, external payment ports) that lose customer trust.
+3.  **Performance:** Site builder templates have heavy legacy code which leads to poor "Core Web Vitals" scores on mobile.
 
 ## "Singleton" Hypothesis Analysis
-The user suspected a singleton instance bottleneck.
-- **Finding:** Currently, there is no custom backend on the main provider.
-- **Interpretation:** If a bottleneck exists, it is likely in the **SaaS provider's overhead** or the **PayPal redirect latency**.
-- **Recommendation:** Moving to a custom-built solution with **Serverless** handlers (using Vercel/Next.js) will eliminate "singleton" concerns by design, as each request is handled by an isolated, auto-scaling instance.
+Analysis of the technical architecture:
+- **Finding:** The site is a static site-builder instance. There is no custom backend "singleton" to crash.
+- **Root Cause:** The perceived "stall" is the **PayPal redirect handshake** failing to resolve quickly on mobile networks.
+- **The Fix:** The proposed facelift uses a **modern frontend (Vite)** that can integrate the **PayPal JS SDK** directly. This keeps the user on the Nutrivanne domain, eliminating the redirect loop entirely and ensuring a "smooth" payment experience that can handle any volume.
 
 ## Basic Pen-Testing (Baseline)
-- **SSL:** Correctly configured (Cloudfront/Webnode).
-- **Input Validation:** Since it's a SaaS builder, most inputs (if any) are handled by Webnode's proprietary logic.
-- **Exposure:** No obvious API keys or environment variables are exposed in the client-side source.
+- **SSL:** Correctly configured.
+- **Exposure:** No internal API keys are exposed, but the site-builder's proprietary JS is vulnerable to typical client-side scraping.
+- **Robustness:** Transitioning to a **Serverless** architecture (Vercel/GitHub Pages) ensures that the site cannot "crash" under high traffic, as every user receives a static, cached edge-delivered bundle.
