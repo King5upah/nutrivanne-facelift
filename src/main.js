@@ -29,8 +29,12 @@ const INITIAL_PLANS = [
   }
 ];
 
-// Load plans from localStorage or use initial
-let plans = JSON.parse(localStorage.getItem('nutrivane_plans')) || INITIAL_PLANS;
+// Load plans from localStorage and MERGE with initial to prevent undefined fields
+const SAVED_PLANS = JSON.parse(localStorage.getItem('nutrivane_plans')) || [];
+let plans = INITIAL_PLANS.map(initPlan => {
+  const saved = SAVED_PLANS.find(p => p.id === initPlan.id);
+  return saved ? { ...initPlan, ...saved } : initPlan;
+});
 let view = 'home'; // 'home', 'login', 'admin'
 const ADMIN_KEY = 'admin123'; // Simulation of a secret key
 

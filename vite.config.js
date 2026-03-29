@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/nutrivanne-facelift/',
+  base: process.env.VERCEL ? '/' : '/nutrivanne-facelift/',
 })
