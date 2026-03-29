@@ -1,17 +1,17 @@
 :root {
-  --primary: #10b981;
-  --primary-glow: rgba(16, 185, 129, 0.4);
-  --primary-dark: #059669;
-  --gold: #c5a059;
-  --bg: #0a0a0b;
-  --bg-offset: #0f172a;
-  --surface: rgba(15, 23, 42, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --text-main: #f8fafc;
+  --primary: #ffffff;
+  --primary-glow: rgba(255, 255, 255, 0.2);
+  --primary-dark: #e2e8f0;
+  --gold: #ffffff; /* Noir: using white for gold accents */
+  --bg: #000000;
+  --bg-offset: #080808;
+  --surface: rgba(10, 10, 10, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --text-main: #ffffff;
   --text-muted: #94a3b8;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.8);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 15px 30px -5px rgba(0, 0, 0, 0.8), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
   
   --font-main: 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: 'Outfit', sans-serif;
@@ -88,15 +88,15 @@ h2 {
 }
 
 .btn-primary {
-  background: var(--primary);
-  color: white;
-  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.2);
 }
 
 .btn-primary:hover {
-  background: var(--primary-dark);
+  background: #f1f5f9;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.23);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
 }
 
 /* Header */
@@ -179,8 +179,8 @@ header {
 }
 
 .plan-features li::before {
-  content: '✓';
-  color: var(--primary);
+  content: '→';
+  color: #ffffff;
   font-weight: bold;
 }
 
@@ -265,13 +265,14 @@ header {
   align-items: center;
   gap: 3rem;
   padding: 5rem 3rem;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(10, 10, 11, 0.9));
-  border-radius: 2.5rem;
+  background: #000000;
+  border-radius: 0; /* Noir: Sharp edges for a more editorial feel */
   margin: 2rem 0;
   overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: none;
   position: relative;
-  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .billboard-content {
@@ -282,13 +283,13 @@ header {
 .billboard-image {
   width: 100%;
   height: 550px;
-  background-image: url('/hero-vanne.png');
+  background-image: url('/hero-portrait.png');
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 1.5rem;
+  background-position: center bottom;
+  border-radius: 0;
   z-index: 1;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1));
+  filter: grayscale(1) contrast(1.1) brightness(0.9); /* Noir: Grayscale and high contrast */
 }
 
 .billboard-tag {
