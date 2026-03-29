@@ -35,98 +35,10 @@ let plans = INITIAL_PLANS.map(initPlan => {
   const saved = SAVED_PLANS.find(p => p.id === initPlan.id);
   return saved ? { ...initPlan, ...saved } : initPlan;
 });
-let view = 'home'; // 'home', 'login', 'admin'
-const ADMIN_KEY = 'admin123'; // Simulation of a secret key
-
-function savePlans() {
-  localStorage.setItem('nutrivane_plans', JSON.stringify(plans));
-  renderApp();
-}
-
-function navigate(targetView) {
-  view = targetView;
-  window.scrollTo(0, 0);
-  renderApp();
-}
-
-function handleLogin(e) {
-  e.preventDefault();
-  const password = e.target.password.value;
-  if (password === ADMIN_KEY) {
-    navigate('admin');
-  } else {
-    alert('Invalid Credentials');
-  }
-}
-
-function updatePlan(id, field, value) {
-  const plan = plans.find(p => p.id === id);
-  if (plan) {
-    plan[field] = value;
-    savePlans();
-  }
-}
 
 function renderApp() {
   const app = document.querySelector('#app');
   
-  if (view === 'admin') {
-    app.innerHTML = `
-      <div class="admin-view">
-        <div class="admin-header">
-          <h1 style="letter-spacing: 0.2em;">ADMIN DASHBOARD</h1>
-          <button class="btn btn-primary" onclick="nutriAdmin.navigate('home')">EXIT</button>
-        </div>
-        
-        <div class="plans-management">
-          <h2 style="margin-bottom: 2rem; opacity: 0.7;">MEMBERSHIP CALIBRATION</h2>
-          ${plans.map(plan => `
-            <div class="admin-card" style="grid-template-columns: 1fr; gap: 1rem;">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <div>
-                  <label style="font-size: 0.6rem; opacity: 0.5;">PLAN TITLE</label>
-                  <input type="text" class="admin-input" value="${plan.title}" onchange="nutriAdmin.updatePlan('${plan.id}', 'title', this.value)">
-                </div>
-                <div>
-                  <label style="font-size: 0.6rem; opacity: 0.5;">PRICE (USD)</label>
-                  <input type="text" class="admin-input" value="${plan.price}" onchange="nutriAdmin.updatePlan('${plan.id}', 'price', this.value)">
-                </div>
-              </div>
-              <div>
-                <label style="font-size: 0.6rem; opacity: 0.5;">DESCRIPTION</label>
-                <textarea class="admin-input" style="height: 80px;" onchange="nutriAdmin.updatePlan('${plan.id}', 'description', this.value)">${plan.description}</textarea>
-              </div>
-              <div>
-                <label style="font-size: 0.6rem; opacity: 0.5;">PAYMENT LINK (OPTIONAL)</label>
-                <input type="text" class="admin-input" value="${plan.paylink}" placeholder="https://stripe.com/..." onchange="nutriAdmin.updatePlan('${plan.id}', 'paylink', this.value)">
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-    return;
-  }
-
-  if (view === 'login') {
-    app.innerHTML = `
-      <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
-        <div class="assessment-card glass" style="width: 100%; max-width: 400px; padding: 4rem;">
-          <h2 style="text-align: center; margin-bottom: 3rem; letter-spacing: 0.2em;">ADMIN ACCESS</h2>
-          <form onsubmit="nutriAdmin.handleLogin(event)">
-            <div class="form-group">
-              <label style="font-size: 0.7rem; opacity: 0.5; text-transform: uppercase;">Security Key</label>
-              <input type="password" name="password" class="admin-input" placeholder="••••••••" style="margin-top: 1rem;" required>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 3rem; border-radius: 0;">AUTHENTICATE</button>
-            <button type="button" class="btn" style="width: 100%; margin-top: 1rem; opacity: 0.5;" onclick="nutriAdmin.navigate('home')">BACK</button>
-          </form>
-        </div>
-      </div>
-    `;
-    return;
-  }
-
   app.innerHTML = `
     <header class="glass container" style="border-radius: 0; border-top: none; border-left: none; border-right: none;">
       <div class="nav-content">
@@ -226,17 +138,10 @@ function renderApp() {
       </div>
       <p style="color: #475569; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;">&copy; 2026 Nutrivanne. Precision & Peak Performance.</p>
       <div style="margin-top: 2rem;">
-        <a href="javascript:void(0)" onclick="nutriAdmin.navigate('login')" style="color: #222; font-size: 0.6rem; text-decoration: none;">ADMINISTRATION</a>
+        <a href="./admin.html" style="color: #222; font-size: 0.6rem; text-decoration: none;">ADMINISTRATION</a>
       </div>
     </footer>
   `;
 }
-
-// Global exposure for event handlers
-window.nutriAdmin = {
-  navigate,
-  handleLogin,
-  updatePlan
-};
 
 renderApp();
