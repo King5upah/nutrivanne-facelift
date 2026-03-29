@@ -1,15 +1,17 @@
 :root {
   --primary: #10b981;
+  --primary-glow: rgba(16, 185, 129, 0.4);
   --primary-dark: #059669;
-  --primary-light: #d1fae5;
-  --bg: #ffffff;
-  --surface: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --text-main: #1f2937;
-  --text-muted: #6b7280;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --gold: #c5a059;
+  --bg: #0a0a0b;
+  --bg-offset: #0f172a;
+  --surface: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
   
   --font-main: 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: 'Outfit', sans-serif;
@@ -29,8 +31,9 @@
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at top right, var(--primary-light) 0%, #ffffff 40%);
+  background: radial-gradient(circle at top right, var(--bg-offset) 0%, var(--bg) 60%);
   background-attachment: fixed;
+  color: var(--text-main);
 }
 
 #app {
@@ -68,6 +71,7 @@ h2 {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   border-radius: 1.5rem;
+  box-shadow: var(--shadow-lg);
 }
 
 .btn {
@@ -261,13 +265,13 @@ header {
   align-items: center;
   gap: 3rem;
   padding: 5rem 3rem;
-  background: linear-gradient(to right, #ffffff, #f9fafb);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(10, 10, 11, 0.9));
   border-radius: 2.5rem;
   margin: 2rem 0;
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--glass-border);
 }
 
 .billboard-content {
@@ -299,15 +303,16 @@ header {
 .billboard-title {
   font-size: 4.5rem;
   font-weight: 800;
-  color: #111827;
+  color: var(--text-main);
   margin-bottom: 1.25rem;
   line-height: 0.95;
   letter-spacing: -0.04em;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
 }
 
 .billboard-subtitle {
   font-size: 1.75rem;
-  color: #374151;
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
   line-height: 1.2;
   font-weight: 500;
@@ -343,20 +348,20 @@ header {
 }
 
 .btn-gold {
-  background: #111827;
-  color: #ffffff;
+  background: var(--gold);
+  color: #000;
   padding: 1.25rem 3rem;
   font-size: 1.125rem;
   letter-spacing: 0.05em;
-  border: 1px solid #111827;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--gold);
+  box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);
 }
 
 .btn-gold:hover {
   background: transparent;
-  color: #111827;
+  color: var(--gold);
   transform: translateY(-4px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3);
 }
 
 @media (max-width: 1024px) {

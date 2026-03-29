@@ -15,26 +15,26 @@ document.querySelector('#app').innerHTML = `
     <section class="billboard-hero glass">
       <div class="billboard-image"></div>
       <div class="billboard-content">
-        <div class="billboard-tag">Programa Personalizado</div>
+        <div class="billboard-tag">Nutrición de Élite</div>
         <h1 class="billboard-title">TRANSFORMA-T</h1>
-        <h2 class="billboard-subtitle">Tu estrategia personalizada de nutrición y entrenamiento</h2>
-        <p class="billboard-desc">Diseñado según tu cuerpo, tu estado actual y tus objetivos reales.</p>
+        <h2 class="billboard-subtitle">Tu estrategia maestra de nutrición y rendimiento</h2>
+        <p class="billboard-desc">Un enfoque científico diseñado para tu cuerpo, tu metabolismo y tus objetivos reales.</p>
         
         <ul class="billboard-features">
-          <li>Evaluación personalizada</li>
-          <li>Plan nutricional estructurado</li>
-          <li>Entrenamiento estratégico</li>
-          <li>Seguimiento profesional</li>
+          <li>Perfil Metabólico</li>
+          <li>Macronutrientes Dinámicos</li>
+          <li>Entrenamiento de Fuerza</li>
+          <li>Bio-Feedback 24/7</li>
         </ul>
         
-        <a href="#plans" class="btn btn-gold">INICIAR MI TRANSFORMACIÓN ↗</a>
-        <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-muted);">Programa activo todo el año.</p>
+        <a href="#plans" class="btn btn-gold">INICIAR TRANSFORMACIÓN PRO ↗</a>
+        <p style="margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-muted); opacity: 0.8;">Acceso exclusivo a la plataforma personalizada.</p>
       </div>
     </section>
 
     <section class="assessment-section">
-      <h2 style="text-align: center;">Tu Valoración Personalizada</h2>
-      <p style="text-align: center; color: var(--text-muted);">Cuéntanos sobre ti para crear el plan perfecto.</p>
+      <h2 style="text-align: center; color: var(--gold); margin-bottom: 0.5rem;">Forja tu Destino</h2>
+      <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem;">Define tus metas para que nuestro motor de IA personalice tu plan.</p>
       
       <div class="assessment-card glass">
         <div class="progress-bar">
@@ -43,77 +43,81 @@ document.querySelector('#app').innerHTML = `
         
         <form id="assessment-form">
           <div class="form-group">
-            <label for="goal">¿Cuál es tu objetivo principal?</label>
-            <select id="goal" class="form-control">
-              <option value="weight-loss">Perder peso</option>
-              <option value="muscle-gain">Ganar masa muscular</option>
-              <option value="wellness">Bienestar general</option>
-              <option value="energy">Aumentar energía</option>
+            <label for="goal">¿Cuál es tu objetivo prioritario?</label>
+            <select id="goal" class="form-control" style="background: rgba(0,0,0,0.3); color: white; border-color: var(--glass-border);">
+              <option value="weight-loss">Déficit Calórico / Definición</option>
+              <option value="muscle-gain">Hipertrofia / Fuerza</option>
+              <option value="wellness">Longevidad / Salud</option>
+              <option value="energy">Rendimiento Atlético</option>
             </select>
           </div>
           
           <div class="form-group">
-            <label for="activity">Nivel de actividad física</label>
-            <select id="activity" class="form-control">
-              <option value="sedentary">Sedentario (Poco o nada)</option>
-              <option value="moderate">Moderado (2-3 días/sem)</option>
-              <option value="active">Activo (4-5 días/sem)</option>
-              <option value="elite">Atleta (6+ días/sem)</option>
+            <label for="activity">Volumen de entrenamiento semanal</label>
+            <select id="activity" class="form-control" style="background: rgba(0,0,0,0.3); color: white; border-color: var(--glass-border);">
+              <option value="sedentary">Bajo (Recuperación activa)</option>
+              <option value="moderate">Moderado (3-4 sesiones)</option>
+              <option value="active">Intenso (5-6 sesiones)</option>
+              <option value="elite">Elite (Dobles sesiones)</option>
             </select>
           </div>
 
-          <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="alert('Generando tu perfil nutricional...')">Continuar ↗</button>
+          <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 2rem; font-size: 1.1rem;" onclick="alert('Analizando datos biométricos...')">Generar mi Estrategia ↗</button>
         </form>
       </div>
     </section>
 
     <section id="plans">
-      <h2 style="text-align: center; margin-bottom: 3rem;">Elige tu Plan de Transformación</h2>
+      <h2 style="text-align: center; margin-bottom: 4rem; font-size: 2.5rem;">Niveles de Membresía</h2>
       <div class="plans-grid">
         <!-- Plan Básico -->
         <article class="plan-card glass">
-          <h3>Plan Esencial</h3>
-          <p class="plan-price">$29.99<span style="font-size: 1rem; color: var(--text-muted);">/mes</span></p>
+          <h3 style="color: var(--text-muted);">ESSENTIAL</h3>
+          <p class="plan-price">$29.99<span style="font-size: 1rem; color: var(--text-muted); font-weight: 400;">/mes</span></p>
           <ul class="plan-features">
-            <li>Plan de alimentación base</li>
-            <li>Guía de suplementación</li>
-            <li>Acceso a comunidad</li>
-            <li>Soporte por correo</li>
+            <li>Algoritmo nutricional base</li>
+            <li>Monitor de macronutrientes</li>
+            <li>Acceso a la academia NutriVane</li>
+            <li>Soporte vía tickets</li>
           </ul>
-          <button class="btn btn-primary" onclick="alert('Iniciando checkout seguro...')">Suscribirse ahora ↗</button>
+          <button class="btn btn-primary" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);" onclick="alert('Iniciando checkout...')">Seleccionar</button>
         </article>
 
         <!-- Plan Premium -->
-        <article class="plan-card glass" style="border: 2px solid var(--primary);">
-          <div style="background: var(--primary); color: white; padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; width: fit-content; margin: 0 auto 1rem;">EL MÁS POPULAR</div>
-          <h3>Plan Optimal Wellness</h3>
-          <p class="plan-price">$49.99<span style="font-size: 1rem; color: var(--text-muted);">/mes</span></p>
+        <article class="plan-card glass" style="border: 1px solid var(--primary); position: relative; overflow: hidden;">
+          <div style="background: var(--primary); color: black; padding: 4px 16px; font-size: 0.75rem; font-weight: 800; position: absolute; top: 0; right: 0; border-radius: 0 0 0 12px;">ELITE SELECTION</div>
+          <h3 style="color: var(--primary);">OPTIMAL PRO</h3>
+          <p class="plan-price">$49.99<span style="font-size: 1rem; color: var(--text-muted); font-weight: 400;">/mes</span></p>
           <ul class="plan-features">
-            <li>Todo en el plan Esencial</li>
-            <li>Coaching 1-on-1</li>
-            <li>Recetas personalizadas</li>
-            <li>Seguimiento de progreso 24/7</li>
+            <li>Todo en el plan Essential</li>
+            <li>Consultoría Mensual (1-on-1)</li>
+            <li>Recetario Bio-Optimizado</li>
+            <li>Seguimiento de Biomarcadores</li>
           </ul>
-          <button class="btn btn-primary" onclick="alert('Iniciando checkout seguro...')">Suscribirse ahora ↗</button>
+          <button class="btn btn-primary" onclick="alert('Iniciando checkout...')">Adquirir Ahora ↗</button>
         </article>
 
         <!-- Plan Elite -->
         <article class="plan-card glass">
-          <h3>Plan Transformación Total</h3>
-          <p class="plan-price">$89.99<span style="font-size: 1rem; color: var(--text-muted);">/mes</span></p>
+          <h3 style="color: var(--gold);">VIP TRANSFORMATION</h3>
+          <p class="plan-price">$89.99<span style="font-size: 1rem; color: var(--text-muted); font-weight: 400;">/mes</span></p>
           <ul class="plan-features">
-            <li>Todo en el plan Optimal</li>
-            <li>Consultas por videollamada</li>
-            <li>Plan de entrenamiento</li>
-            <li>Análisis de laboratorio VIP</li>
+            <li>Todo en el plan Optimal Pro</li>
+            <li>Sesiones de Mastermind</li>
+            <li>Plan de Entrenamiento Avanzado</li>
+            <li>Análisis Genético y Metabólico</li>
           </ul>
-          <button class="btn btn-primary" onclick="alert('Iniciando checkout seguro...')">Suscribirse ahora ↗</button>
+          <button class="btn btn-gold" onclick="alert('Iniciando checkout...')">Obtener Acceso VIP ↗</button>
         </article>
       </div>
     </section>
   </main>
 
-  <footer style="margin-top: 4rem; padding: 2rem 0; text-align: center; color: var(--text-muted);">
-    <p>&copy; 2026 Nutrivanne. Todos los derechos reservados.</p>
+  <footer style="margin-top: 8rem; padding: 4rem 0; text-align: center; border-top: 1px solid var(--glass-border);">
+    <div class="logo" style="justify-content: center; margin-bottom: 1.5rem;">
+      <img src="/logo.jpg" alt="Nutrivanne Logo" style="height: 24px; width: auto; opacity: 0.7;">
+      <span style="opacity: 0.7;">Nutrivanne</span>
+    </div>
+    <p style="color: var(--text-muted); font-size: 0.875rem;">&copy; 2026 Nutrivanne. Precision Nutrition & Peak Performance.</p>
   </footer>
 `;
