@@ -260,19 +260,23 @@ header {
 
 /* Transform-T Hero (Billboard Style) */
 .billboard-hero {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 3rem;
-  padding: 5rem 3rem;
+  justify-content: center;
+  text-align: center;
+  gap: 0;
+  padding: 6rem 2rem;
   background: #000000;
-  border-radius: 0; /* Noir: Sharp edges for a more editorial feel */
-  margin: 2rem 0;
+  min-height: 90vh;
   overflow: hidden;
-  box-shadow: none;
   position: relative;
-  border-top: 1px solid var(--glass-border);
-  border-bottom: 1px solid var(--glass-border);
+}
+
+.billboard-content {
+  max-width: 900px;
+  z-index: 10;
+  margin-top: -5rem; /* Overlap image slightly */
 }
 
 .billboard-content {
@@ -282,14 +286,20 @@ header {
 
 .billboard-image {
   width: 100%;
-  height: 550px;
-  background-image: url('/hero-portrait.png');
+  max-width: 550px;
+  height: 500px;
+  background-image: url('./hero-portrait.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center bottom;
-  border-radius: 0;
   z-index: 1;
-  filter: grayscale(1) contrast(1.1) brightness(0.9); /* Noir: Grayscale and high contrast */
+  filter: contrast(1.1) brightness(1.1);
+  -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%), 
+                      linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 90%, transparent 100%), 
+              linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
 }
 
 .billboard-tag {
@@ -363,6 +373,59 @@ header {
   color: var(--gold);
   transform: translateY(-4px);
   box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3);
+}
+
+/* Admin View */
+.admin-view {
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 2rem;
+}
+
+.admin-card {
+  background: #080808;
+  border: 1px solid var(--glass-border);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr auto;
+  align-items: center;
+  gap: 2rem;
+}
+
+.admin-input {
+  background: #000;
+  border: 1px solid var(--glass-border);
+  color: white;
+  padding: 0.75rem 1rem;
+  width: 100%;
+}
+
+.admin-input:focus {
+  border-color: #ffffff;
+  outline: none;
+}
+
+.dashboard-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  opacity: 0.2;
+  transition: opacity 0.3s;
+}
+
+.dashboard-toggle:hover {
+  opacity: 1;
 }
 
 @media (max-width: 1024px) {
