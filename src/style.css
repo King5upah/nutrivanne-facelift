@@ -147,16 +147,38 @@ header {
 }
 
 .plan-card {
-  padding: 2.5rem;
+  padding: 3rem 2rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   height: 100%;
-  transition: transform 0.3s ease;
+  background: #080808;
+  border: 1px solid var(--glass-border);
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .plan-card:hover {
-  transform: scale(1.02);
+  transform: translateY(-15px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  background: #0a0a0a;
+}
+
+.plan-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+  transition: 0.6s;
+}
+
+.plan-card:hover::after {
+  left: 100%;
 }
 
 .plan-price {
@@ -291,74 +313,174 @@ header {
 
 /* Transform-T Hero (Billboard Style) */
 .billboard-hero {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 0;
-  padding: 6rem 2rem;
+  gap: 2rem;
+  padding: 0 5vw;
   background: #000000;
-  min-height: 90vh;
-  overflow: hidden;
+  min-height: calc(100vh - 80px);
   position: relative;
+  overflow: hidden;
+  transition: background 0.5s ease;
 }
 
-.billboard-content {
-  max-width: 900px;
-  z-index: 10;
-  margin-top: -5rem; /* Overlap image slightly */
+/* Persona Toggles */
+.persona-toggles {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  z-index: 20;
+}
+
+.persona-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0;
+  filter: grayscale(1) opacity(0.5);
+}
+
+.persona-btn img {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.persona-btn span {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: #fff;
+  font-weight: 700;
+}
+
+.persona-btn:hover, .persona-btn.active {
+  filter: grayscale(0) opacity(1);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.persona-btn.active {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.billboard-parallax-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 35vw;
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+  letter-spacing: -0.05em;
+  z-index: 0;
+  pointer-events: none;
+  text-transform: uppercase;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+.hero-accent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+  z-index: 1;
+  animation: heroAccentShift 20s infinite alternate ease-in-out;
+}
+
+@keyframes heroAccentShift {
+  from { transform: translateX(5%) skewX(0); }
+  to { transform: translateX(-5%) skewX(-5deg); }
 }
 
 .billboard-content {
   text-align: left;
-  z-index: 2;
-}
-
-.billboard-image {
-  width: 100%;
-  max-width: 550px;
-  height: 500px;
-  background-image: url('./hero-portrait.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  z-index: 1;
-  filter: contrast(1.1) brightness(1.1);
-  -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%), 
-                      linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 90%, transparent 100%), 
-              linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  mask-composite: intersect;
-  -webkit-mask-composite: source-in;
+  padding: 4rem;
+  z-index: 10;
 }
 
 .billboard-tag {
-  color: #c5a059;
+  color: transparent;
+  -webkit-text-stroke: 1px #fff;
+  opacity: 0.4;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.5em;
+  margin-bottom: 2rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  font-size: 0.75rem;
-  margin-bottom: 0.75rem;
 }
 
 .billboard-title {
-  font-size: 4.5rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 1.25rem;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-  word-break: keep-all;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: #fff;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  animation: personaFadeIn 0.6s ease-out;
+}
+
+@keyframes personaFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.billboard-image {
+  height: 90vh;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  filter: contrast(1.1) brightness(1.1);
+  transition: background-image 0.5s ease-in-out, filter 0.5s ease;
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, black 40%, transparent 90%), 
+                      linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 40%, black 40%, transparent 90%), 
+              linear-gradient(to bottom, black 80%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  position: relative;
+  z-index: 5;
+  order: 2; /* Portrait on the right */
 }
 
 .billboard-subtitle {
-  font-size: 1.75rem;
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
-  font-weight: 500;
+  font-size: 1.25rem;
+  color: #fff;
+  opacity: 0.8;
+  font-weight: 300;
+  max-width: 500px;
+  margin-bottom: 3rem;
+}
+
+.billboard-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 4rem;
+}
+
+.billboard-features li {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #fff;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
 }
 
 .billboard-desc {
@@ -368,20 +490,23 @@ header {
 }
 
 .billboard-features {
-  list-style: none;
-  margin-bottom: 3rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  display: none;
 }
 
-.billboard-features li {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  font-weight: 600;
-  color: #1f2937;
-  font-size: 1rem;
+.billboard-floating-features {
+  display: inline-block;
+  margin: 2rem auto;
+  border-radius: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.billboard-floating-features ul li {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
 }
 
 .billboard-features li::before {
@@ -462,44 +587,54 @@ header {
 
 @media (max-width: 1024px) {
   .billboard-hero {
-    padding: 4rem 1rem;
+    display: flex;
+    flex-direction: column; /* Portrait top, Content bottom */
+    padding: 0;
     min-height: auto;
     justify-content: flex-start;
   }
   
-  .billboard-content {
-    text-align: center;
-    margin-top: 0;
+  .hero-accent {
     width: 100%;
+    height: 40vh;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
+  }
+
+  .billboard-image {
+    height: 50vh;
+    width: 100%;
+    margin-top: 2rem;
+    z-index: 5;
+    order: 1;
+    -webkit-mask-image: radial-gradient(circle at 50% 40%, black 40%, transparent 95%);
+    mask-image: radial-gradient(circle at 50% 40%, black 40%, transparent 95%);
   }
   
-  .billboard-image {
-    height: 350px;
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 2rem;
-    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  .billboard-content {
+    order: 2;
+    text-align: center;
+    padding: 2rem;
+    margin-top: -5vh; /* Overlap image slightly */
+    z-index: 10;
+    background: transparent;
   }
   
   .billboard-title {
-    font-size: 3rem;
-    letter-spacing: 0.05em;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
   }
 
   .billboard-subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    margin: 0 auto 2rem;
   }
 
   .billboard-features {
-    display: none; /* Simplify mobile hero */
-  }
-
-  .admin-card {
-    grid-template-columns: 1fr;
-    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
   }
 }
 

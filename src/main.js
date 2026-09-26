@@ -29,7 +29,27 @@ const INITIAL_PLANS = [
   }
 ];
 
-// Load plans from localStorage and MERGE with initial to prevent undefined fields
+// Persona State
+let activePersona = 'lifestyle';
+
+const PERSONAS = {
+  lifestyle: {
+    tag: 'PEAK PERFORMANCE',
+    title: 'TRANSFORMA-T',
+    subtitle: 'The Master Strategy for Nutrition and Performance',
+    image: './hero-portrait.png',
+    accent: 'rgba(255, 255, 255, 0.03)'
+  },
+  science: {
+    tag: 'BIOMETRIC PRECISION',
+    title: 'PROTOCOL-S',
+    subtitle: 'Scientific metabolic calibration for genetic optimization.',
+    image: './hero-pointing.png',
+    accent: 'rgba(56, 189, 248, 0.06)'
+  }
+};
+
+// Load plans from localStorage
 const SAVED_PLANS = JSON.parse(localStorage.getItem('nutrivane_plans')) || [];
 let plans = INITIAL_PLANS.map(initPlan => {
   const saved = SAVED_PLANS.find(p => p.id === initPlan.id);
@@ -38,6 +58,7 @@ let plans = INITIAL_PLANS.map(initPlan => {
 
 function renderApp() {
   const app = document.querySelector('#app');
+  if (!app) return;
   
   app.innerHTML = `
     <header class="glass container" style="border-radius: 0; border-top: none; border-left: none; border-right: none;">
@@ -51,30 +72,40 @@ function renderApp() {
     </header>
 
     <main>
-      <section class="billboard-hero">
-        <div class="billboard-image"></div>
+      <section class="billboard-hero group-${activePersona}">
+        <div class="billboard-parallax-text">${activePersona === 'lifestyle' ? 'NUTRI VANE' : 'PRECISION'}</div>
+        <div class="hero-accent" style="background: ${PERSONAS[activePersona].accent}"></div>
+        <div class="billboard-image" style="background-image: url('${PERSONAS[activePersona].image}');"></div>
         <div class="billboard-content">
-          <div class="billboard-tag" style="color: #ffffff; opacity: 0.6; font-weight: 300; letter-spacing: 0.3em;">PRECISION NUTRITION</div>
-          <h1 class="billboard-title" style="font-size: clamp(3rem, 10vw, 6rem); letter-spacing: 0.1em;">TRANSFORMA-T</h1>
-          <h2 class="billboard-subtitle" style="color: #ffffff; font-weight: 300; margin-bottom: 2rem;">The Master Strategy for Nutrition and Performance</h2>
+          <div class="persona-toggles">
+            <button class="persona-btn ${activePersona === 'lifestyle' ? 'active' : ''}" onclick="switchPersona('lifestyle')">
+              <img src="./hero-portrait.png" alt="Lifestyle">
+              <span>LIFESTYLE</span>
+            </button>
+            <button class="persona-btn ${activePersona === 'science' ? 'active' : ''}" onclick="switchPersona('science')">
+              <img src="./hero-pointing.png" alt="Science">
+              <span>SCIENCE</span>
+            </button>
+          </div>
+          <div class="billboard-tag">${PERSONAS[activePersona].tag}</div>
+          <h1 class="billboard-title">${PERSONAS[activePersona].title}</h1>
+          <h2 class="billboard-subtitle">${PERSONAS[activePersona].subtitle}</h2>
           
-          <ul class="billboard-features" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 3rem; opacity: 0.7;">
+          <ul class="billboard-features">
             <li>Metabolic Profiling</li>
-            <li>Dynamic Macronutrients</li>
+            <li>Dynamic Macros</li>
             <li>Force Training</li>
             <li>Bio-Feedback</li>
           </ul>
           
-          <a href="#plans" class="btn btn-primary" style="padding: 1.5rem 5rem; border-radius: 0; font-weight: 700; letter-spacing: 0.2em;">INICIAR PROTOCOLO ↗</a>
+          <div class="billboard-cta">
+            <a href="#plans" class="btn btn-primary">INICIAR PROTOCOLO ↗</a>
+          </div>
         </div>
       </section>
 
       <div class="container">
         <section class="assessment-section" style="display: flex; flex-direction: column; align-items: center; margin-top: 8rem;">
-          <div class="pointing-container" style="position: absolute; left: 50%; transform: translateX(-400px); top: 0; width: 300px; height: 500px; overflow: visible; pointer-events: none; z-index: 5;">
-            <img src="./hero-pointing.png" alt="Vanne pointing" style="width: 100%; height: 100%; object-fit: contain; filter: contrast(1.1) brightness(1.05); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
-          </div>
-          
           <div style="text-align: center; max-width: 600px; margin-bottom: 4rem;">
             <h2 style="color: #ffffff; margin-bottom: 1rem; letter-spacing: 0.25em; text-transform: uppercase;">Define your Path</h2>
             <p style="color: #94a3b8; font-weight: 300;">Our AI-engine will calibrate your strategy based on your unique biometric markers.</p>
@@ -106,8 +137,35 @@ function renderApp() {
                 </select>
               </div>
 
-              <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 3rem; border-radius: 0;" onclick="alert('Calibrating...')">CALIBRATE STRATEGY ↗</button>
+              <div id="calibration-progress" style="display: none; margin-top: 2rem;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0.5rem; color: #fff;">
+                  <span>Biometric Sync</span>
+                  <span id="progress-percent">0%</span>
+                </div>
+                <div style="height: 1px; background: rgba(255,255,255,0.1); width: 100%;">
+                  <div id="progress-fill" style="height: 100%; background: #fff; width: 0%; transition: width 0.1s linear;"></div>
+                </div>
+              </div>
+
+              <button type="button" id="calibrate-btn" class="btn btn-primary" style="width: 100%; margin-top: 3rem; border-radius: 0;" onclick="startCalibration()">CALIBRATE STRATEGY ↗</button>
             </form>
+          </div>
+        </section>
+
+        <section id="methodology" style="margin-top: 15rem; padding: 0 5vw;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem;">
+            <div>
+              <h3 style="font-size: 0.8rem; letter-spacing: 0.4em; color: rgba(255,255,255,0.4); margin-bottom: 2rem; text-transform: uppercase;">01 / METABOLIC</h3>
+              <p style="font-weight: 300; line-height: 1.8; opacity: 0.8;">Advanced hormonal calibration based on your unique metabolic fingerprint. We don't guess; we calculate the exact fuel your system requires for peak performance.</p>
+            </div>
+            <div>
+              <h3 style="font-size: 0.8rem; letter-spacing: 0.4em; color: rgba(255,255,255,0.4); margin-bottom: 2rem; text-transform: uppercase;">02 / NEURAL</h3>
+              <p style="font-weight: 300; line-height: 1.8; opacity: 0.8;">Force training strategies designed to optimize central nervous system output. Maximizing recruitment patterns for accelerated muscle protein synthesis.</p>
+            </div>
+            <div>
+              <h3 style="font-size: 0.8rem; letter-spacing: 0.4em; color: rgba(255,255,255,0.4); margin-bottom: 2rem; text-transform: uppercase;">03 / BIO-DATA</h3>
+              <p style="font-weight: 300; line-height: 1.8; opacity: 0.8;">Real-time strategy adjustment through continuous biometric feedback. Your protocol evolves alongside your transformation, ensuring zero plateaus.</p>
+            </div>
           </div>
         </section>
 
@@ -143,5 +201,47 @@ function renderApp() {
     </footer>
   `;
 }
+
+// Global Event Listeners
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const parallaxText = document.querySelector('.billboard-parallax-text');
+  if (parallaxText) {
+    parallaxText.style.transform = `translate(-50%, calc(-50% + ${scrolled * 0.15}px))`;
+  }
+});
+
+window.startCalibration = () => {
+  const btn = document.getElementById('calibrate-btn');
+  const progress = document.getElementById('calibration-progress');
+  const fill = document.getElementById('progress-fill');
+  const percent = document.getElementById('progress-percent');
+  
+  if (!btn || !progress) return;
+
+  btn.disabled = true;
+  btn.innerText = 'SYNCING BIOMETRICS...';
+  progress.style.display = 'block';
+  
+  let p = 0;
+  const interval = setInterval(() => {
+    p += Math.random() * 5;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(interval);
+      btn.innerText = 'CALIBRATION COMPLETE';
+      setTimeout(() => {
+        location.hash = '#plans';
+      }, 500);
+    }
+    fill.style.width = p + '%';
+    percent.innerText = Math.floor(p) + '%';
+  }, 100);
+};
+
+window.switchPersona = (p) => {
+  activePersona = p;
+  renderApp();
+};
 
 renderApp();
